@@ -17,10 +17,10 @@ describe('QuizService', () => {
   });
 
   it('should return an array', () => {
-    expect(service.getQuiz()).toBeInstanceOf(Array);
+    expect(service.getQuiz(0)).toBeInstanceOf(Array);
   });
 
   it('should return an array greater then zero', () => {
-    expect(service.getQuiz().length).toBeGreaterThan(0);
+    expect(service.getQuiz(0).length).toBeGreaterThan(0);
   });
 });

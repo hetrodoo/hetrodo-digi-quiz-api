@@ -19,10 +19,10 @@ describe('QuizController', () => {
   });
 
   it('should return an array', () => {
-    expect(controller.getQuiz()).toBeInstanceOf(Array);
+    expect(controller.getQuiz(0)).toBeInstanceOf(Array);
   });
 
   it('should return an array greater then zero', () => {
-    expect(controller.getQuiz().length).toBeGreaterThan(0);
+    expect(controller.getQuiz(0).length).toBeGreaterThan(0);
   });
 });
