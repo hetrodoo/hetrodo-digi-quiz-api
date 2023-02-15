@@ -3,7 +3,8 @@ import IQuiz from '../models/quiz/IQuiz';
 
 @Injectable()
 export class QuizService {
-  getQuiz(): IQuiz[] {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getQuiz(id: number): IQuiz[] {
     return [
       {
         category: 'Entertainment%3A%20Video%20Games',
