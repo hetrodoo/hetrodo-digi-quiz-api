@@ -15,4 +15,12 @@ describe('QuizService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should return an array', () => {
+    expect(service.getQuiz()).toBeInstanceOf(Array);
+  });
+
+  it('should return an array greater then zero', () => {
+    expect(service.getQuiz().length).toBeGreaterThan(0);
+  });
 });
