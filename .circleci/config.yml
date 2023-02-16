@@ -1,0 +1,47 @@
+version: 2.1
+orbs:
+  gcp-cli: circleci/gcp-cli@1.0.0
+jobs:
+  docker-image:
+    docker:
+      - image: google/cloud-sdk:latest
+    working_directory: ~/project
+    steps:
+      - checkout
+      - gcp-cli/initialize
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: "Configure Docker"
+          command: |
+            gcloud auth configure-docker $REGISTRY_URL
+      - run:
+          name: "Build and push docker image"
+          command: |
+            docker build -t $ARTIFACT_REGISTRY_URL:latest \
+              --build-arg PORT=8080 \
+              .
+
+            docker push $ARTIFACT_REGISTRY_URL:latest
+  deploy:
+    docker:
+      - image: google/cloud-sdk:latest
+    working_directory: ~/project
+    steps:
+      - gcp-cli/initialize
+      - run:
+          name: "Deploy image"
+          command: |
+            gcloud run deploy digi-quiz-api \
+              --region=us-central1 \
+              --image=$ARTIFACT_REGISTRY_URL:latest
+workflows:
+  build:
+    jobs:
+      - docker-image
+      - deploy:
+          requires:
+            - docker-image
+          filters:
+            branches:
+              only: master
